@@ -15,9 +15,8 @@ class AnnouncementsReadHandlerFactory
     {
         return new AnnouncementsReadHandler(
             $container->get(EntityManager::class),
-            $container->get('config')['page_size'], 
-            $container->get(ResourceGenerator::class),
-            $container->get(HalResponseFactory::class)
+            $container->get(HalResponseFactory::class),
+            $container->get(ResourceGenerator::class)
         );
     }
 }

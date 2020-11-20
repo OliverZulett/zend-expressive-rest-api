@@ -53,6 +53,7 @@ class ConfigProvider
             'factories'  => [
                 Handler\AnnouncementsCreateHandler::class => Handler\AnnouncementsCreateHandlerFactory::class,
                 Handler\AnnouncementsReadHandler::class => Handler\AnnouncementsReadHandlerFactory::class,
+                Handler\AnnouncementsListHandler::class => Handler\AnnouncementsListHandlerFactory::class,
                 Handler\AnnouncementsUpdateHandler::class => Handler\AnnouncementsUpdateHandlerFactory::class,
                 Handler\AnnouncementsDeleteHandler::class => Handler\AnnouncementsDeleteHandlerFactory::class,
             ],
@@ -95,14 +96,14 @@ class ConfigProvider
             [
                 '__class__' => RouteBasedResourceMetadata::class,
                 'resource_class' => Announcement::class,
-                'route' => 'announcements.view',
+                'route' => 'announcements.read',
                 'extractor' => ReflectionHydrator::class,
             ],
             [
                 '__class__' => RouteBasedCollectionMetadata::class,
                 'collection_class' => AnnouncementCollection::class,
                 'collection_relation' => 'announcement',
-                'route' => 'announcements.read',
+                'route' => 'announcements.list',
             ],
         ];
     }
