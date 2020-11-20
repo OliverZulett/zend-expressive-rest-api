@@ -11,9 +11,10 @@ declare(strict_types=1);
 
 return [
     'dependencies' => [
-        'factories' => [
-            Announcements\Handler\AnnouncementsCreateHandler::class => Announcements\Handler\AnnouncementsCreateHandlerFactory::class,
-            Announcements\Handler\AnnouncementsReadHandler::class => Announcements\Handler\AnnouncementsReadHandlerFactory::class,
-        ],
+        'factories' => [],
     ],
 ];
+
+
+// Too few arguments to function Announcements\Handler\AnnouncementsReadHandler::__construct(), 0 
+// passed in /var/www/vendor/zendframework/zend-expressive/src/MiddlewareContainer.php on line 64 and exactly 4 expected

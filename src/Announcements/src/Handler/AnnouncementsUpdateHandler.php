@@ -14,7 +14,7 @@ use Zend\Diactoros\Response\JsonResponse;
 use Zend\Expressive\Hal\HalResponseFactory;
 use Zend\Expressive\Hal\ResourceGenerator;
 
-class AnnouncementsCreateHandler implements RequestHandlerInterface
+class AnnouncementsUpdateHandler implements RequestHandlerInterface
 {
     protected $entityManager;
     protected $halResponseFactory;
@@ -39,22 +39,23 @@ class AnnouncementsCreateHandler implements RequestHandlerInterface
             $result['_error']['error description'] = 'No request body sent.';
             return new JsonResponse($result, 400);
         }
-        $entity = new Announcement();
+        $entityRepository = $this->entityManager->getRepository(Announcement::class);
+        $entity = $entityRepository->find($request->getAttribute('id'));
+        if (empty($entity)) {
+            $result['_error']['error'] = 'not_found';
+            $result['_error']['error_description'] = 'Record not found.';
+            return new JsonResponse($result, 404);
+        }
         try {
-            $entity->setAnnouncement($requestBody);
-            $entity->setCreated(new \DateTime('now'));
-            $this->entityManager->persist($entity);
+            $entity->setAnnouncement($requestBody);   
+            $this->entityManager->merge($entity);
             $this->entityManager->flush();
-        } catch (ORMException $e) {
-            $result['_error']['error'] = 'missing request';
-            $result['_error']['error description'] = $e->getMessage();
-            return new JsonResponse($result, 500);
+        } catch(ORMException $e) {
+            $result['_error']['error'] = 'not_updated';
+            $result['_error']['error_description'] = $e->getMessage();
+            return new JsonResponse($result, 400);
         }
         $resource = $this->resourceGenerator->fromObject($entity, $request);
         return $this->halResponseFactory->createResponse($request, $resource);
     }
 }
-
-
-// Unable to resolve service "Announcements\Handler\EntityManager" to a factory; 
-// are you certain you provided it during configuration?

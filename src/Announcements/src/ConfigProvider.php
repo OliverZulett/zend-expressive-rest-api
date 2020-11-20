@@ -6,10 +6,9 @@ namespace Announcements;
 
 use Announcements\Entity\Announcement;
 use Announcements\Entity\AnnouncementCollection;
-use Whoops\Handler\Handler;
-use Zend\Expressive\Application;
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Zend\Expressive\Application;
 use Zend\Expressive\Hal\Metadata\MetadataMap;
 use Zend\Expressive\Hal\Metadata\RouteBasedCollectionMetadata;
 use Zend\Expressive\Hal\Metadata\RouteBasedResourceMetadata;
@@ -34,7 +33,7 @@ class ConfigProvider
             'dependencies' => $this->getDependencies(),
             'templates'    => $this->getTemplates(),
             'doctrine'     => $this->getDoctrineEntities(),
-            MetadataMap::class => $this->getHalMetadataMap()
+            MetadataMap::class => $this->getHalMetadataMap(),
         ];
     }
 
@@ -46,14 +45,16 @@ class ConfigProvider
         return [
             'delegators' => [
                 Application::class => [
-                    RoutesDelegator::class
-                ]
+                    RoutesDelegator::class,
+                ],
             ],
             'invokables' => [
             ],
             'factories'  => [
                 Handler\AnnouncementsCreateHandler::class => Handler\AnnouncementsCreateHandlerFactory::class,
-                Handler\AnnouncementsReadHandler::class => Handler\AnnouncementsReadHandlerFactory::class
+                Handler\AnnouncementsReadHandler::class => Handler\AnnouncementsReadHandlerFactory::class,
+                Handler\AnnouncementsUpdateHandler::class => Handler\AnnouncementsUpdateHandlerFactory::class,
+                Handler\AnnouncementsDeleteHandler::class => Handler\AnnouncementsDeleteHandlerFactory::class,
             ],
         ];
     }
