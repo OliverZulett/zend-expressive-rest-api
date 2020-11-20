@@ -52,6 +52,7 @@ class ConfigProvider
             'invokables' => [
             ],
             'factories'  => [
+                Handler\AnnouncementsCreateHandler::class => Handler\AnnouncementsCreateHandlerFactory::class,
                 Handler\AnnouncementsReadHandler::class => Handler\AnnouncementsReadHandlerFactory::class
             ],
         ];

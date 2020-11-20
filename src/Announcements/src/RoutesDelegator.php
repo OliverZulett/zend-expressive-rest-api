@@ -4,8 +4,6 @@ namespace Announcements;
 
 use Announcements\Handler;
 use Psr\Container\ContainerInterface;
-use Whoops\Handler\Handler as HandlerHandler;
-use Zend\Expressive\Application;
 
 class RoutesDelegator {
     
@@ -13,11 +11,12 @@ class RoutesDelegator {
     {
         /** @var $app Application */
         $app = $callback();
-        $app->post('announcements[/]', Handler\AnnouncementsCreateHandler::class, 'announcements.create');
-        $app->get('announcements/{id:\d+}[/]', Handler\AnnouncementsViewHandler::class, 'announcements.view');
+        $app->post('/announcements[/]', Handler\AnnouncementsCreateHandler::class, 'announcements.create');
+        $app->get('/announcements/{id:[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}}[/]', Handler\AnnouncementsViewHandler::class, 'announcements.view');
         $app->get('/announcements/[?page={page:\d+}]', Handler\AnnouncementsReadHandler::class, 'announcements.read');
-        $app->put('announcements/{id:\d+}[/]', Handler\AnnouncementsUpdateHandler::class, 'announcements.update');
-        $app->delete('announcements/{id:\d+}[/]', Handler\AnnouncementsDeleteHandler::class, 'announcements.delete');
+        $app->put('/announcements/{id:[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}}[/]', Handler\AnnouncementsUpdateHandler::class, 'announcements.update');
+        $app->delete('/announcements/{id:[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}}[/]', Handler\AnnouncementsDeleteHandler::class, 'announcements.delete');
         return $app;
     }
+
 }

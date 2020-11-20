@@ -13,9 +13,11 @@ class AnnouncementsReadHandlerFactory
 {
     public function __invoke(ContainerInterface $container): AnnouncementsReadHandler
     {
-        $entityManager = $container->get(EntityManager::class);
-        $resourceGenerator = $container->get(ResourceGenerator::class);
-        $halResponseFactory = $container->get(HalResponseFactory::class);
-        return new AnnouncementsReadHandler($entityManager, $container->get('config')['page_size'], $resourceGenerator, $halResponseFactory);
+        return new AnnouncementsReadHandler(
+            $container->get(EntityManager::class),
+            $container->get('config')['page_size'], 
+            $container->get(ResourceGenerator::class),
+            $container->get(HalResponseFactory::class)
+        );
     }
 }
